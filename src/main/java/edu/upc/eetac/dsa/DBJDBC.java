@@ -2,6 +2,7 @@ package edu.upc.eetac.dsa;
 
 import java.sql.*; //JDBC
 
+//CLASE PARA TEST SIN SQL INJECTION (METODO PRIMITIVO, USAR DBJDBC2)
 public class DBJDBC {
 
     //Metodo para insertar un Usuario en la tabla User
@@ -9,7 +10,7 @@ public class DBJDBC {
         //Nos conectamos a la BBDD y lanzamos una sentencia para insertar un usuario
         Connection connection = DBUtils.getConnection();
         Statement statement1 = connection.createStatement();
-        statement1.execute("INSERT INTO User (ID, lastName, firstName, address, city) VALUES (0, 'Requena', 'Ivan', 'Calle falsa 123', 'SantBoi')");
+        statement1.execute("INSERT INTO User (ID, lastName, firstName, address, city) VALUES (0, 'Ivansiko', 'Calle falsa 123')");
         connection.close();
     }
 
@@ -39,7 +40,7 @@ public class DBJDBC {
             //log.d("",e)
             e.printStackTrace();
         } finally {
-            connection.close();
+            connection.close(); //CERRAR CONEXION SIEMPRE EN EL FINALLY!!
         }
     }
 

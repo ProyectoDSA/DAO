@@ -1,47 +1,43 @@
 package edu.upc.eetac.dsa;
 
+import java.io.File;
+import java.io.FileReader;
+
+import java.sql.*;
+import java.util.Properties;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+
+//Clase que lee el fichero de propiedades para iniciar la conexion con la BBDD
 
 public class DBUtils {
 
-    public static final String DB_NAME = "dbgrupo1";
-    public static final String DB_HOST = "localhost";
-    public static final String DB_PORT = "3306";
-    public static final String DB_USER = "root";
-    public static final String DB_PASS = "covid19";
-
-    private static String getDb() {
-        return DB_NAME;
-    }
-
-    private static String getDbHost() {
-        return DB_HOST;
-    }
-
-    private static String getDbPort() {
-        return DB_PORT;
-    }
-
-    private static String getDbUser() {
-        return DB_USER;
-    }
-
-    private static String getDbPasswd() {
-        return DB_PASS;
-    }
-
+    //Metodo que incia y devuelve la conexion con la BBDD
     public static Connection getConnection() throws SQLException {
-        String db = DBUtils.getDb();
-        String host = DBUtils.getDbHost();
-        String port = DBUtils.getDbPort();
-        String user = DBUtils.getDbUser();
-        String pass = DBUtils.getDbPasswd();
+        Connection connection = null;
 
-        Connection connection = DriverManager.getConnection("jdbc:mariadb://"+host+":"+port+"/"
-            +db+"?user="+user+"&password="+pass);
+        try{
+            Properties p = new Properties(); //Crea fichero de propiedades
+            //Seleccionamos nuestro fichero donde guardamos las propiedades
+            File dbPathPropertiesFile = new File("src/main/resources/db.properties");
+            FileReader r = new FileReader(dbPathPropertiesFile);
+            //Insertamos nuestro fichero en las propiedades
+            p.load(r);
+            //Asignamos los distintos parametros
+            String host = p.getProperty("db.host");
+            String port = p.getProperty("db.port");
+            String user = p.getProperty("db.username");
+            String db = p.getProperty("db.database");
+            String pswd = p.getProperty("db.password");
 
-        return connection;
+            //Obtenemos la conexion
+            connection = DriverManager.getConnection("jdbc:mariadb://"+host+":"+port+"/"
+                    +db+"?user="+user+"&password="+pswd);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return connection; //Devolvemos la conexion
     }
 }

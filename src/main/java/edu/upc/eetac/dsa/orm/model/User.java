@@ -1,19 +1,17 @@
 package edu.upc.eetac.dsa.orm.model;
 
+import edu.upc.eetac.dsa.RandomUtils;
+
 public class User {
 
-    public int ID;
+    public String ID;
     public String nombre;
     public String mail;
 
-    public User(int ID, String nombre, String mail) {
-        this.ID = ID;
+    public User(String nombre, String mail) {
+        this.ID = RandomUtils.generateID(6);
         this.nombre = nombre;
         this.mail = mail;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
     }
 
     public void setNombre(String nombre) {
@@ -22,5 +20,9 @@ public class User {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getID(){
+        return this.ID;
     }
 }
