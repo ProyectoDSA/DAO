@@ -1,7 +1,7 @@
-package edu.upc.eetac.dsa;
+package edu.upc.eetac.dsa.orm;
 
-import edu.upc.eetac.dsa.util.ObjectHelper;
-import edu.upc.eetac.dsa.util.QueryHelper;
+import edu.upc.eetac.dsa.orm.util.ObjectHelper;
+import edu.upc.eetac.dsa.orm.util.QueryHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

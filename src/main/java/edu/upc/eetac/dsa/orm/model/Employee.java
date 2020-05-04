@@ -1,4 +1,4 @@
-package edu.upc.eetac.dsa.model;
+package edu.upc.eetac.dsa.orm.model;
 
 public class Employee {
 

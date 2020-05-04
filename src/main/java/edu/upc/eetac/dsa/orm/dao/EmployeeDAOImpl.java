@@ -1,6 +1,8 @@
-package edu.upc.eetac.dsa;
+package edu.upc.eetac.dsa.orm.dao;
 
-import edu.upc.eetac.dsa.model.Employee;
+import edu.upc.eetac.dsa.orm.model.Employee;
+import edu.upc.eetac.dsa.orm.FactorySession;
+import edu.upc.eetac.dsa.orm.Session;
 /*import jdk.internal.jline.internal.Log;
 import sun.security.util.Debug;*/
 

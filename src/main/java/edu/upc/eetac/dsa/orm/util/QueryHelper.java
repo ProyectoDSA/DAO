@@ -1,4 +1,4 @@
-package edu.upc.eetac.dsa.util;
+package edu.upc.eetac.dsa.orm.util;
 
 public class QueryHelper {
 

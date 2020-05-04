@@ -1,8 +1,8 @@
 package edu.upc.eetac.dsa;
 
-import edu.upc.eetac.dsa.model.Department;
-import edu.upc.eetac.dsa.model.Employee;
-import edu.upc.eetac.dsa.util.QueryHelper;
+import edu.upc.eetac.dsa.orm.model.Department;
+import edu.upc.eetac.dsa.orm.model.Employee;
+import edu.upc.eetac.dsa.orm.util.QueryHelper;
 import junit.framework.Assert;
 import org.junit.Test;
 
