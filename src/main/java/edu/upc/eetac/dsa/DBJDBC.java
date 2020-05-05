@@ -10,7 +10,7 @@ public class DBJDBC {
         //Nos conectamos a la BBDD y lanzamos una sentencia para insertar un usuario
         Connection connection = DBUtils.getConnection();
         Statement statement1 = connection.createStatement();
-        statement1.execute("INSERT INTO User (ID, lastName, firstName, address, city) VALUES (0, 'Ivansiko', 'Calle falsa 123')");
+        statement1.execute("INSERT INTO User (ID, nombre, mail) VALUES (0, 'Miguel', '198.163.2.1')");
         connection.close();
     }
 
@@ -26,14 +26,14 @@ public class DBJDBC {
 
             //Cogemos el resultado, lo iteramos y lo printamos en pantalla
             int id;
-            String lastName, address, city;
+            String lastName, address;
             while(rs.next()){
                 id = (Integer) rs.getObject(1);
                 lastName = (String) rs.getObject(2);
                 address = (String) rs.getObject(3);
-                city = (String) rs.getObject(4);
 
-                System.out.println(id+" "+lastName+" "+address+" "+city);
+
+                System.out.println(id+" "+lastName+" "+address+" ");
             }
         }
         catch (Exception e){

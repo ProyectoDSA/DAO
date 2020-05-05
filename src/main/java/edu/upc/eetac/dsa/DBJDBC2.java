@@ -4,6 +4,7 @@ import java.sql.*;
 
 public class DBJDBC2 {
 
+
     public static void insert() throws Exception{
         Connection connection = DBUtils.getConnection();
 
@@ -20,6 +21,7 @@ public class DBJDBC2 {
     }
 
     public static void main(String[] args) throws Exception{
+
         insert();
     }
 }

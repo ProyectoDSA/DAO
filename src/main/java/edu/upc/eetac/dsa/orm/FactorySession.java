@@ -1,9 +1,14 @@
 package edu.upc.eetac.dsa.orm;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class FactorySession {
     public static Session openSession() {
@@ -21,8 +26,7 @@ public class FactorySession {
     private static Connection getConnection() {
         Connection conn = null;
         try {
-            conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost/test?" +
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/test?" +
                             "user=minty&password=greatsqldb");
 
         } catch (SQLException ex) {

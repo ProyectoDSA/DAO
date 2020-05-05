@@ -16,7 +16,7 @@ public class QueryHelperTest {
 
     @Test
     public void testQueryINSERT2() {
-        Assert.assertEquals("INSERT INTO Deparment (ID, name, description) VALUES (?, ?, ?)",
+        Assert.assertEquals("INSERT INTO Department (ID, name, description) VALUES (?, ?, ?)",
                 QueryHelper.createQueryINSERT(new Department("ENTEL", "ENGINYERIA TELEMÀTICA")));
     }
 
@@ -28,7 +28,7 @@ public class QueryHelperTest {
 
     @Test
     public void testQuerySELECT2() {
-        Assert.assertEquals("SELECT * FROM Deparment WHERE ID = ?",
+        Assert.assertEquals("SELECT * FROM Department WHERE ID = ?",
                 QueryHelper.createQuerySELECT(new Department("ENTEL", "ENGINYERIA TELEMÀTICA")));
     }
 }
