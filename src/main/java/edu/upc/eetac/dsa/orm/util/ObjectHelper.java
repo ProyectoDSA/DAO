@@ -24,12 +24,26 @@ public class ObjectHelper {
 
     public static void setter(Object object, String property, Object value) {
         // Method // invoke
-
-
+        Method method = null;
+        try{
+            method = object.getClass().getMethod(getSetter(property),value.getClass());
+            method.invoke(object);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        //System.out.println(res);
     }
 
     private static String getGetter(String property){
         return "get"+property.substring(0,1).toUpperCase()+property.substring(1);
+    }
+
+    private static String getSetter(String property){
+        return "set"+property.substring(0,1).toUpperCase()+property.substring(1);
     }
 
     public static Object getter(Object object, String property) {
