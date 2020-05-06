@@ -4,25 +4,46 @@ import edu.upc.eetac.dsa.RandomUtils;
 
 public class User {
 
-    public String ID;
+    public String id;
     public String nombre;
     public String mail;
 
+    public User(){}
+
     public User(String nombre, String mail) {
-        this.ID = RandomUtils.generateID(6);
+        this();
+        this.id = RandomUtils.generateID(6);
         this.nombre = nombre;
         this.mail = mail;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    public String getMail() {
+        return mail;
+    }
+
     public void setMail(String mail) {
         this.mail = mail;
     }
 
-    public String getID(){
-        return this.ID;
+    @Override
+    public String toString() {
+        return id+" "+nombre+" "+mail;
     }
 }

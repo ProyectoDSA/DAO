@@ -1,5 +1,7 @@
 package edu.upc.eetac.dsa.orm.util;
 
+import java.lang.reflect.Field;
+
 public class QueryHelper {
 
     public static String createQueryINSERT(Object entity) {
@@ -10,15 +12,15 @@ public class QueryHelper {
 
         String [] fields = ObjectHelper.getFields(entity);
 
-        sb.append("ID");
+        sb.append("id");
         for (String field: fields) {
-            sb.append(", ").append(field);
+            if(!field.equals("id")) sb.append(", ").append(field);
         }
 
         sb.append(") VALUES (?");
 
         for (String field: fields) {
-            sb.append(", ?");
+            if(!field.equals("id")) sb.append(", ?");
         }
 
         sb.append(")");
@@ -29,6 +31,14 @@ public class QueryHelper {
     public static String createQuerySELECT(Object entity) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
+        sb.append(" WHERE ID = ?");
+
+        return sb.toString();
+    }
+
+    public static String createQueryDELETE(Object entity){
+        StringBuffer sb = new StringBuffer();
+        sb.append("DELETE FROM ").append(entity.getClass().getSimpleName());
         sb.append(" WHERE ID = ?");
 
         return sb.toString();

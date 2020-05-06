@@ -1,25 +1,43 @@
 package edu.upc.eetac.dsa;
 
-import java.sql.*;
+import edu.upc.eetac.dsa.orm.dao.UserDAO;
+import edu.upc.eetac.dsa.orm.dao.UserDAOImpl;
+import edu.upc.eetac.dsa.orm.model.User;
 
+import java.sql.*;
+import java.util.List;
+
+//CLASE PARA TEST
 public class DBJDBC2 {
 
+    //Inserta un usuario en la tabla User
     public static void insert() throws Exception{
+        //Obtenemos conexion con la BBDD
         Connection connection = DBUtils.getConnection();
 
         //SQL INJECTION
-        String theQuery = "INSERT INTO User (ID,nombre,mail) VALUES (0,?,?)";
+        //Preparamos consulta INSERT para usuario con parametros
+        String theQuery = "INSERT INTO User (ID,nombre,mail) VALUES (?,?,?)";
 
+        //Asignamos el valor a los parametros de la Query
         PreparedStatement statement1 = connection.prepareStatement(theQuery);
-        statement1.setString(1, "Ivan");
-        statement1.setString(2, "ivan@yahoo.es");
+        statement1.setString(1, RandomUtils.generateID(6));
+        statement1.setString(2, "Caos");
+        statement1.setString(3, "caos@yahoo.es");
 
+        //Ejecutamos la consulta
         statement1.execute();
 
+        //Cerramos conexion SIEMPRE!!
         connection.close();
     }
 
     public static void main(String[] args) throws Exception{
-        insert();
+        //insert();
+        UserDAO userDao = new UserDAOImpl();
+        //userDao.addUser("kuaivan", "jf");
+        User user = userDao.getUser("D1?DKK");
+        System.out.println(user.toString());
+       // userDao.deleteUser("G5ZDHN");
     }
 }

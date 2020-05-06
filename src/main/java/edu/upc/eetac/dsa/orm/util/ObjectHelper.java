@@ -1,6 +1,8 @@
 package edu.upc.eetac.dsa.orm.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class ObjectHelper {
 
@@ -26,9 +28,25 @@ public class ObjectHelper {
 
     }
 
+    private static String getGetter(String property){
+        return "get"+property.substring(0,1).toUpperCase()+property.substring(1);
+    }
+
     public static Object getter(Object object, String property) {
         // Method // invoke
-
-        return null;
+        Method method = null;
+        Object res = null;
+        try {
+            method = object.getClass().getDeclaredMethod(getGetter(property), null);
+            res = method.invoke(object);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        System.out.println(res);
+        return res;
     }
 }

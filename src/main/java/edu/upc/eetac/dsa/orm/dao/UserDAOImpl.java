@@ -2,7 +2,6 @@ package edu.upc.eetac.dsa.orm.dao;
 
 import edu.upc.eetac.dsa.orm.FactorySession;
 import edu.upc.eetac.dsa.orm.Session;
-import edu.upc.eetac.dsa.orm.model.Employee;
 import edu.upc.eetac.dsa.orm.model.User;
 
 import java.util.List;
@@ -10,12 +9,12 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO{
 
     @Override
-    public User getUser(int id){
+    public User getUser(String id){
         Session session = null;
         User user = null;
         try {
             session = FactorySession.openSession();
-            user = (User)session.get(User.class, id);
+            user = (User) session.get(User.class, id);
         }
         catch (Exception e) {
             // LOG
@@ -34,7 +33,7 @@ public class UserDAOImpl implements UserDAO{
         try {
             session = FactorySession.openSession();
             User user = new User(name, mail);
-            userID = user.getID();
+            userID = user.getId();
             session.save(user);
         }
         catch (Exception e) {
@@ -49,7 +48,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public void updateUser(int id, String name, String mail) {
+    public void updateUser(String id, String name, String mail) {
         User user = this.getUser(id);
         user.setNombre(name);
         user.setMail(mail);
@@ -68,7 +67,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public void deleteUser(int userID) {
+    public void deleteUser(String userID) {
         User user = this.getUser(userID);
         Session session = null;
         try {
