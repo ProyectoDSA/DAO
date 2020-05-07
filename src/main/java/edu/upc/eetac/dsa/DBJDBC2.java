@@ -22,8 +22,8 @@ public class DBJDBC2 {
         //Asignamos el valor a los parametros de la Query
         PreparedStatement statement1 = connection.prepareStatement(theQuery);
         statement1.setString(1, RandomUtils.generateID(6));
-        statement1.setString(2, "Caos");
-        statement1.setString(3, "caos@yahoo.es");
+        statement1.setString(2, "Ivan");
+        statement1.setString(3, "ivan@yahoo.es");
 
         //Ejecutamos la consulta
         statement1.execute();
@@ -33,12 +33,11 @@ public class DBJDBC2 {
     }
 
     public static void main(String[] args) throws Exception{
-        //insert();
+        insert();
         UserDAO userDao = new UserDAOImpl();
-        //userDao.addUser("aaaaaaa", "kddssdk");
-        /*User user = userDao.getUser("D1?DKK");
-        System.out.println(user.toString());
-        userDao.deleteUser("G5ZDHN");*/
-        List<User> users = userDao.getAllUsers();
+        userDao.addUser("Manu", "manu@outlook.com");
+        userDao.getAllUsers();
+        /*User user = userDao.getUser("EMTBXC");
+        System.out.println(user.toString());*/
     }
 }

@@ -62,7 +62,7 @@ public class SessionImpl implements Session {
             statement.execute(selectQuery);
             rs = statement.getResultSet();
             while(rs.next()) {
-                for (int i=1; i<ObjectHelper.getNumberFields(theClass); i++) {
+                for (int i=1; i<=ObjectHelper.getNumberFields(theClass); i++) {
                     System.out.println(rs.getString(i));
                     res.add(rs.getObject(i));
                 }
@@ -144,21 +144,7 @@ public class SessionImpl implements Session {
     }
 
     public void delete(Object object) {
-        String delete = QueryHelper.createQueryDELETE(object);
-        PreparedStatement pstm = null;
-        try {
-            pstm=conn.prepareStatement(delete);
-            for(String field: ObjectHelper.getFields(object)){
-                if(field.equals("id")) {
-                    pstm.setObject(1, ObjectHelper.getter(object, field));
-                }
-                pstm.executeQuery();
-            }
 
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 
     public void close() {
