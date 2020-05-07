@@ -1,4 +1,4 @@
-package edu.upc.eetac.dsa.orm;
+package edu.upc.eetac.dsa.orm.session;
 
 import java.util.HashMap;
 import java.util.List;

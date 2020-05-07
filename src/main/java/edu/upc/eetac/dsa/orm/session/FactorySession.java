@@ -1,4 +1,4 @@
-package edu.upc.eetac.dsa.orm;
+package edu.upc.eetac.dsa.orm.session;
 
 
 import edu.upc.eetac.dsa.orm.util.DBUtils;
@@ -7,6 +7,7 @@ import java.sql.Connection;
 
 public class FactorySession {
 
+    //Funcion que abre la conexion para realizar una consulta
     public static Session openSession() {
 
         Connection conn = getConnection();
@@ -15,7 +16,8 @@ public class FactorySession {
     }
 
 
-
+    //Obtenemos la conexion desde la clase DBUtils, que es la que nos lee
+    //la configuracion del fichero db.properties
     private static Connection getConnection() {
         Connection connection = null;
         try {

@@ -3,7 +3,10 @@ package edu.upc.eetac.dsa.orm.util;
 import java.util.Random;
 
 public class RandomUtils {
+
     public RandomUtils(){}
+
+    //Funcion que genera un ID aleatorio de tamaño 6
     public static String generateID(int size){
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();

@@ -2,11 +2,15 @@ package edu.upc.eetac.dsa.orm.model;
 
 import edu.upc.eetac.dsa.orm.util.RandomUtils;
 
+//CLASE MODELO DE USUARIO QUE TIENE LOS ATRIBUTOS, EL CONSTRUCTOR, GETTERS Y SETTERS
 public class User {
 
+    //Esto es lo que leemos cuando llamamos a los Fields
+    //***************
     public String id;
     public String nombre;
     public String mail;
+    //***************
 
     public User(){}
 
