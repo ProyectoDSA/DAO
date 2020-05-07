@@ -1,5 +1,7 @@
 package edu.upc.eetac.dsa;
 
+import edu.upc.eetac.dsa.orm.util.DBUtils;
+
 import java.sql.*; //JDBC
 
 //CLASE PARA TEST SIN SQL INJECTION (METODO PRIMITIVO, USAR DBJDBC2)

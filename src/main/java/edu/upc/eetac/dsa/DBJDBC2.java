@@ -2,10 +2,10 @@ package edu.upc.eetac.dsa;
 
 import edu.upc.eetac.dsa.orm.dao.UserDAO;
 import edu.upc.eetac.dsa.orm.dao.UserDAOImpl;
-import edu.upc.eetac.dsa.orm.model.User;
+import edu.upc.eetac.dsa.orm.util.DBUtils;
+import edu.upc.eetac.dsa.orm.util.RandomUtils;
 
 import java.sql.*;
-import java.util.List;
 
 //CLASE PARA TEST
 public class DBJDBC2 {

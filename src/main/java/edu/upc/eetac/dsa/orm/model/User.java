@@ -1,6 +1,6 @@
 package edu.upc.eetac.dsa.orm.model;
 
-import edu.upc.eetac.dsa.RandomUtils;
+import edu.upc.eetac.dsa.orm.util.RandomUtils;
 
 public class User {
 
@@ -44,10 +44,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + nombre + '\'' +
-                ", mail='" + mail + '\'' +
-                '}';
+        return "User [id="+id+", name=" + nombre + ", mail=" + mail +"]";
     }
 }

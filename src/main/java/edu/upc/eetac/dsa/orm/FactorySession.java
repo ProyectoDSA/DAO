@@ -1,14 +1,9 @@
 package edu.upc.eetac.dsa.orm;
 
 
-import edu.upc.eetac.dsa.DBUtils;
+import edu.upc.eetac.dsa.orm.util.DBUtils;
 
-import java.io.File;
-import java.io.FileReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Properties;
 
 public class FactorySession {
 
