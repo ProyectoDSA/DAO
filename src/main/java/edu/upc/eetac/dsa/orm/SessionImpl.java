@@ -96,7 +96,7 @@ public class SessionImpl implements Session {
 
     public Object findByID(Class theClass, String id) {
         ResultSet rs = null;
-        Object object;
+        Object object = null;
 
         String selectByIdQuery = QueryHelper.createQuerySELECTbyID(theClass);
         System.out.println(selectByIdQuery);
@@ -104,14 +104,22 @@ public class SessionImpl implements Session {
         PreparedStatement pstm;
 
         try {
+            object = theClass.newInstance();
             pstm = this.conn.prepareStatement(selectByIdQuery);
             pstm.setObject(1, id);
-            pstm.executeQuery();
-            rs = pstm.getResultSet();
-        } catch (SQLException e) {
+            rs = pstm.executeQuery();
+            while(rs.next()) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                for(int i=1; i<=rsmd.getColumnCount();i++){
+                    String field = rsmd.getColumnName(i);
+                    ObjectHelper.setter(object,field,rs.getObject(i));
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        while(true){
+
+        /*while(true){
             try {
                 object = theClass.newInstance();
                 if (!rs.next()){
@@ -134,7 +142,7 @@ public class SessionImpl implements Session {
                 e.printStackTrace();
             }
 
-        }
+        }*/
         System.out.println("Object founded: "+object);
         return object;
     }

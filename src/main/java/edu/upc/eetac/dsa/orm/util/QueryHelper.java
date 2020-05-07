@@ -28,9 +28,9 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQuerySELECTbyID(Object entity) {
+    public static String createQuerySELECTbyID(Class theClass) {
         StringBuffer sb = new StringBuffer("SELECT * FROM ");
-        sb.append(entity.getClass().getSimpleName());
+        sb.append(theClass.getSimpleName());
         sb.append(" WHERE ID=?");
         return sb.toString();
     }

@@ -33,11 +33,11 @@ public class DBJDBC2 {
     }
 
     public static void main(String[] args) throws Exception{
-        insert();
+        //insert();
         UserDAO userDao = new UserDAOImpl();
-        userDao.addUser("Manu", "manu@outlook.com");
-        userDao.getAllUsers();
-        /*User user = userDao.getUser("EMTBXC");
-        System.out.println(user.toString());*/
+        //userDao.addUser("Manu", "manu@outlook.com");
+        //userDao.getAllUsers();
+        User user = userDao.getUser("GV5C1P");
+        System.out.println(user.toString());
     }
 }
