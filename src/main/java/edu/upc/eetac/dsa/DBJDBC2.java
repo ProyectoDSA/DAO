@@ -36,8 +36,9 @@ public class DBJDBC2 {
         //insert();
         UserDAO userDao = new UserDAOImpl();
         //userDao.addUser("Manu", "manu@outlook.com");
-        //userDao.getAllUsers();
-        User user = userDao.getUser("GV5C1P");
-        System.out.println(user.toString());
+        /*userDao.getAllUsers();
+        userDao.updateUser("GV5C1P", "micky", "jj");
+        userDao.getUser("GV5C1P");*/
+        userDao.deleteUser("GV5C1P");
     }
 }

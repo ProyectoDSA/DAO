@@ -42,11 +42,26 @@ public class QueryHelper {
         return sb.toString();
     }
 
+    public static String createQueryUPDATE(Object entity) {
+        StringBuffer sb = new StringBuffer("UPDATE ");
+        sb.append(entity.getClass().getSimpleName());
+        sb.append(" SET ");
+
+        String [] fields = ObjectHelper.getFields(entity);
+
+        sb.append("id = ?");
+        for (String field: fields) {
+            if(!field.equals("id")) sb.append(", ").append(field).append(" = ?");
+        }
+        sb.append(" WHERE ID = '"+ObjectHelper.getter(entity, "id")).append("'");
+
+        return sb.toString();
+    }
+
     public static String createQueryDELETE(Object entity){
         StringBuffer sb = new StringBuffer();
         sb.append("DELETE FROM ").append(entity.getClass().getSimpleName());
         sb.append(" WHERE ID = ?");
-
         return sb.toString();
     }
 

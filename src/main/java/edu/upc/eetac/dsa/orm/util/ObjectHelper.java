@@ -35,7 +35,7 @@ public class ObjectHelper {
         Method method = null;
         try{
             method = object.getClass().getMethod(getSetter(property),value.getClass());
-            method.invoke(object);
+            method.invoke(object,value);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

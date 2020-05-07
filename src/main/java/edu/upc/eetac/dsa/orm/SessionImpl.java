@@ -49,7 +49,7 @@ public class SessionImpl implements Session {
     public List<Object> findAll(Class theClass) {
         System.out.println("Preguntar metadata SessionImpl/findAll");
         List<Object> res = new ArrayList<>();
-        ResultSet rs = null;
+        ResultSet rs;
         Object object;
 
         String selectQuery = QueryHelper.createQuerySELECTALL(theClass);
@@ -58,44 +58,33 @@ public class SessionImpl implements Session {
         Statement statement = null;
 
         try {
+            object = theClass.newInstance();
             statement = this.conn.createStatement();
             statement.execute(selectQuery);
             rs = statement.getResultSet();
             while(rs.next()) {
-                for (int i=1; i<=ObjectHelper.getNumberFields(theClass); i++) {
-                    System.out.println(rs.getString(i));
+                ResultSetMetaData rsmd = rs.getMetaData();
+                for (int i=1; i<=rsmd.getColumnCount(); i++) {
+                    String field = rsmd.getColumnName(i);
+                    ObjectHelper.setter(object,field,rs.getObject(i));
                     res.add(rs.getObject(i));
+                    System.out.println("Objects founded: "+ rs.getObject(i).toString());
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
-        /*while(true){
-            try {
-                if (!rs.next()){
-                    object = theClass.newInstance();
-                    for(int i=1; i<=rs.getMetaData().getColumnCount(); i++){
-                        String columnName = rs.getMetaData().getColumnName(i);
-                        columnName = columnName.substring(0,1).toUpperCase() + columnName.substring(1);
-                        ObjectHelper.setter(object, columnName, rs.getString(rs.getMetaData().getColumnLabel(i)));
-                        res.add(object);
-                    }
-                    break;
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
 
-        }*/
+
         return res;
     }
 
     public Object findByID(Class theClass, String id) {
-        ResultSet rs = null;
+        ResultSet rs;
         Object object = null;
 
         String selectByIdQuery = QueryHelper.createQuerySELECTbyID(theClass);
@@ -119,40 +108,40 @@ public class SessionImpl implements Session {
             e.printStackTrace();
         }
 
-        /*while(true){
-            try {
-                object = theClass.newInstance();
-                if (!rs.next()){
-                    for(int i=1; i<=rs.getMetaData().getColumnCount(); i++){
-                        String columnName = rs.getMetaData().getColumnName(i);
-                        columnName = columnName.substring(0,1).toUpperCase() + columnName.substring(1);
-                        theClass.getMethod("set" + columnName, String.class).invoke(object);
-                    }
-                    break;
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-
-        }*/
         System.out.println("Object founded: "+object);
         return object;
     }
 
     public void update(Object object) {
-
+        String updateQuery = QueryHelper.createQueryUPDATE(object);
+        PreparedStatement statement = null;
+        try{
+            statement = conn.prepareStatement(updateQuery);
+            statement.setObject(1, ObjectHelper.getter(object, "id"));
+            statement.setObject(2, ObjectHelper.getter(object, "nombre"));
+            statement.setObject(3, ObjectHelper.getter(object, "mail"));
+            System.out.println(updateQuery);
+            statement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            close();
+        }
     }
 
     public void delete(Object object) {
-
+        String deleteQuery = QueryHelper.createQueryDELETE(object);
+        PreparedStatement statement = null;
+        try{
+            statement = conn.prepareStatement(deleteQuery);
+            statement.setObject(1, ObjectHelper.getter(object, "id"));
+            System.out.println(deleteQuery);
+            statement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            close();
+        }
     }
 
     public void close() {
