@@ -35,9 +35,10 @@ public class DBJDBC2 {
     public static void main(String[] args) throws Exception{
         //insert();
         UserDAO userDao = new UserDAOImpl();
-        //userDao.addUser("kuaivan", "jf");
-        User user = userDao.getUser("D1?DKK");
+        //userDao.addUser("aaaaaaa", "kddssdk");
+        /*User user = userDao.getUser("D1?DKK");
         System.out.println(user.toString());
-       // userDao.deleteUser("G5ZDHN");
+        userDao.deleteUser("G5ZDHN");*/
+        List<User> users = userDao.getAllUsers();
     }
 }

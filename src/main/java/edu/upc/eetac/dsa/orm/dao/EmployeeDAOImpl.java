@@ -111,7 +111,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
             HashMap<String, Integer> params = new HashMap<String, Integer>();
             params.put("deptID", deptID);
 
-            employeeList = session.findAll(Employee.class, params);
+            //employeeList = session.findAll(Employee.class, params);
         }
         catch (Exception e) {
             // LOG

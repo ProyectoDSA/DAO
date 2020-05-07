@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.sql.Types.*;
@@ -45,33 +46,96 @@ public class SessionImpl implements Session {
 
     }
 
-    public void close() {
-    }
+    public List<Object> findAll(Class theClass) {
+        System.out.println("Preguntar metadata SessionImpl/findAll");
+        List<Object> res = new ArrayList<>();
+        ResultSet rs = null;
+        Object object;
 
-    @Override
-    public Object get(Class theClass, String id) {
-        Object object = null;
-        PreparedStatement statement;
-        //Instantiating a object of type class for the getters
+        String selectQuery = QueryHelper.createQuerySELECTALL(theClass);
+        System.out.println(selectQuery);
+
+        Statement statement = null;
+
         try {
-            String selectQuery = QueryHelper.createQuerySELECT(theClass.newInstance());
-            object = theClass.newInstance();
-            statement = conn.prepareStatement(selectQuery);
-            statement.setObject(1, id);
-            ResultSet rs =  statement.executeQuery();
-            int i = 0;
-            //INVOKE SETTER FOR EACH CORRESPONDING PROPERTY OF THE TABLE TO MAP WITH OBJECT
-            while (rs.next()){
-                //SQL WILL NEVER RETURN LIST AS A RESULT
-                ResultSetMetaData rsmd = rs.getMetaData();
-                for(i=1;i<=rsmd.getColumnCount();i++){
-                    String name = rs.getString(i);
-                    ObjectHelper.setter(object, name, rs.getObject(i));
+            statement = this.conn.createStatement();
+            statement.execute(selectQuery);
+            rs = statement.getResultSet();
+            while(rs.next()) {
+                for (int i=1; i<ObjectHelper.getNumberFields(theClass); i++) {
+                    System.out.println(rs.getString(i));
+                    res.add(rs.getObject(i));
                 }
             }
-        }catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+        /*while(true){
+            try {
+                if (!rs.next()){
+                    object = theClass.newInstance();
+                    for(int i=1; i<=rs.getMetaData().getColumnCount(); i++){
+                        String columnName = rs.getMetaData().getColumnName(i);
+                        columnName = columnName.substring(0,1).toUpperCase() + columnName.substring(1);
+                        ObjectHelper.setter(object, columnName, rs.getString(rs.getMetaData().getColumnLabel(i)));
+                        res.add(object);
+                    }
+                    break;
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        }*/
+        return res;
+    }
+
+    public Object findByID(Class theClass, String id) {
+        ResultSet rs = null;
+        Object object;
+
+        String selectByIdQuery = QueryHelper.createQuerySELECTbyID(theClass);
+        System.out.println(selectByIdQuery);
+
+        PreparedStatement pstm;
+
+        try {
+            pstm = this.conn.prepareStatement(selectByIdQuery);
+            pstm.setObject(1, id);
+            pstm.executeQuery();
+            rs = pstm.getResultSet();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        while(true){
+            try {
+                object = theClass.newInstance();
+                if (!rs.next()){
+                    for(int i=1; i<=rs.getMetaData().getColumnCount(); i++){
+                        String columnName = rs.getMetaData().getColumnName(i);
+                        columnName = columnName.substring(0,1).toUpperCase() + columnName.substring(1);
+                        theClass.getMethod("set" + columnName, String.class).invoke(object);
+                    }
+                    break;
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        }
+        System.out.println("Object founded: "+object);
         return object;
     }
 
@@ -97,15 +161,6 @@ public class SessionImpl implements Session {
         }
     }
 
-    public List<Object> findAll(Class theClass) {
-        return null;
-    }
-
-    public List<Object> findAll(Class theClass, HashMap params) {
-        return null;
-    }
-
-    public List<Object> query(String query, Class theClass, HashMap params) {
-        return null;
+    public void close() {
     }
 }

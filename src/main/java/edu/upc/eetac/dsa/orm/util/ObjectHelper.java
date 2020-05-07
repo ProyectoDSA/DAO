@@ -21,6 +21,14 @@ public class ObjectHelper {
 
     }
 
+    public static int getNumberFields(Class theClass){
+
+        Field[] fields = theClass.getDeclaredFields();
+        int cont = 0;
+        for(Field f: fields) cont++;
+        return cont;
+    }
+
 
     public static void setter(Object object, String property, Object value) {
         // Method // invoke

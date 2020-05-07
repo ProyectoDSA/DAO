@@ -28,10 +28,16 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQuerySELECT(Object entity) {
+    public static String createQuerySELECTbyID(Object entity) {
+        StringBuffer sb = new StringBuffer("SELECT * FROM ");
+        sb.append(entity.getClass().getSimpleName());
+        sb.append(" WHERE ID=?");
+        return sb.toString();
+    }
+
+    public static String createQuerySELECTALL(Class theClass) {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
-        sb.append(" WHERE ID = ?");
+        sb.append("SELECT * FROM ").append(theClass.getSimpleName());
 
         return sb.toString();
     }
